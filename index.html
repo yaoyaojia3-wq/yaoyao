@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>贾瑶瑶 | BMS HIL 测试工程师</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--pink:#ff2d95;--blue:#00d4ff;--purple:#b300ff;--green:#00ff88;--bg:#0a0a0f;--card:#12121a;--border:#1e1e30;--text:#e0e0f0;--dim:#8888aa}
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden;min-height:100vh}
+.grid-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-image:linear-gradient(rgba(0,212,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,0.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:0}
+.scanline{position:fixed;top:0;left:0;width:100%;height:100%;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.06) 2px,rgba(0,0,0,0.06) 4px);pointer-events:none;z-index:999}
+.container{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1}
+.navbar{position:fixed;top:0;left:0;width:100%;z-index:100;background:rgba(10,10,15,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,212,255,0.1);height:60px;display:flex;align-items:center}
+.navbar .container{display:flex;justify-content:space-between;align-items:center;width:100%}
+.logo{font-family:'Orbitron',sans-serif;font-size:1.3rem;font-weight:700;text-decoration:none;color:var(--blue);text-shadow:0 0 10px rgba(0,212,255,0.5);letter-spacing:2px}
+.logo .accent{color:var(--pink);text-shadow:0 0 10px rgba(255,45,149,0.5)}
+.nav-links{display:flex;gap:8px}
+.nav-links a{text-decoration:none;color:var(--dim);font-size:0.8rem;padding:6px 14px;border:1px solid transparent;transition:all .3s;font-family:'Orbitron',sans-serif;letter-spacing:1px;border-radius:4px}
+.nav-links a:hover{color:var(--blue);border-color:rgba(0,212,255,0.3);box-shadow:0 0 20px rgba(0,212,255,0.3)}
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding-top:60px;text-align:center}
+.hero h1{font-family:'Orbitron',sans-serif;font-size:4rem;font-weight:900;letter-spacing:6px;margin-bottom:12px}
+.hero h1 .pink{color:var(--pink);text-shadow:0 0 30px rgba(255,45,149,0.4)}
+.hero h1 .blue{color:var(--blue);text-shadow:0 0 30px rgba(0,212,255,0.4)}
+.hero h1::after{content:'';display:block;width:80px;height:3px;background:linear-gradient(90deg,var(--pink),var(--blue));margin:16px auto 0;box-shadow:0 0 20px rgba(255,45,149,0.4)}
+.hero-badge{display:inline-block;padding:6px 20px;margin-bottom:24px;border:1px solid var(--blue);font-family:'Orbitron',sans-serif;font-size:0.7rem;letter-spacing:3px;color:var(--blue);animation:pulseGlow 2s ease-in-out infinite}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 8px rgba(0,212,255,0.2)}50%{box-shadow:0 0 25px rgba(0,212,255,0.5)}}
+.hero-sub{color:var(--dim);font-size:1rem;margin-bottom:36px;letter-spacing:2px}
+.hero-stats{display:flex;justify-content:center;gap:48px;margin-bottom:44px;flex-wrap:wrap}
+.stat-item{text-align:center}
+.stat-num{font-family:'Orbitron',sans-serif;font-size:2.8rem;font-weight:700;color:var(--pink);text-shadow:0 0 20px rgba(255,45,149,0.3)}
+.stat-suffix{font-family:'Orbitron',sans-serif;font-size:1rem;color:var(--pink)}
+.stat-label{display:block;font-size:0.75rem;color:var(--dim);margin-top:4px;letter-spacing:2px}
+.btn-neon{display:inline-block;padding:14px 40px;border:1px solid var(--pink);color:var(--pink);text-decoration:none;font-family:'Orbitron',sans-serif;font-size:0.85rem;letter-spacing:3px;transition:all .4s;background:transparent}
+.btn-neon:hover{background:var(--pink);color:var(--bg);box-shadow:0 0 40px rgba(255,45,149,0.5)}
+.section{padding:90px 0}
+.section-title-wrapper{text-align:center;margin-bottom:56px}
+.section-number{font-family:'Orbitron',sans-serif;font-size:0.75rem;letter-spacing:4px;color:var(--blue);display:block;margin-bottom:8px}
+.section-title{font-family:'Orbitron',sans-serif;font-size:1.8rem;font-weight:700;letter-spacing:3px;text-transform:uppercase}
+.section-title .pink{color:var(--pink)}
+.section-title .blue{color:var(--blue)}
+.section-title::after{content:'';display:block;width:50px;height:2px;background:linear-gradient(90deg,var(--pink),var(--blue));margin:12px auto 0}
+.alt-bg{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:32px}
+.about-card{background:var(--card);border:1px solid var(--border);border-left:3px solid var(--blue);padding:28px 24px}
+.info-row{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.04)}
+.info-row:last-child{border-bottom:none}
+.info-label{color:var(--dim);font-size:0.82rem}
+.info-val{color:var(--text);font-weight:500;text-align:right}
+.terminal{background:#050510;border:1px solid var(--blue);border-radius:8px;overflow:hidden;height:100%;box-shadow:0 0 20px rgba(0,212,255,0.08)}
+.terminal-bar{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(0,0,0,0.4);border-bottom:1px solid rgba(0,212,255,0.1)}
+.term-dot{width:10px;height:10px;border-radius:50%}
+.term-dot.r{background:#ff5f57}
+.term-dot.y{background:#febc2e}
+.term-dot.g{background:#28c840}
+.term-title{margin-left:10px;font-size:0.7rem;color:var(--dim);font-family:'Orbitron',sans-serif;letter-spacing:1px}
+.terminal-body{padding:18px 22px}
+.terminal-body p{margin-bottom:10px;font-size:0.9rem;color:#aabbcc;line-height:1.8}
+.prompt{color:var(--green);margin-right:8px}
+.cursor{animation:blink 1s step-end infinite;color:var(--green)}
+@keyframes blink{50%{opacity:0}}
+.timeline{position:relative;padding-left:44px}
+.timeline::before{content:'';position:absolute;left:20px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--blue),var(--purple),var(--pink));box-shadow:0 0 10px rgba(0,212,255,0.3)}
+.tl-item{position:relative;margin-bottom:36px;opacity:0;transform:translateX(-20px);transition:all .7s cubic-bezier(0.22,1,0.36,1)}
+.tl-item.visible{opacity:1;transform:translateX(0)}
+.tl-dot{position:absolute;left:-44px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--blue);box-shadow:0 0 16px rgba(0,212,255,0.5);z-index:2}
+.tl-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:24px 28px;transition:all .4s}
+.tl-card:hover{border-color:var(--blue);box-shadow:0 0 24px rgba(0,212,255,0.08)}
+.tl-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px}
+.tl-date{font-family:'Orbitron',sans-serif;font-size:0.7rem;color:var(--blue);letter-spacing:1px}
+.tl-company{font-size:0.82rem;color:var(--dim)}
+.tl-card h3{font-size:1rem;margin-bottom:12px}
+.tl-detail{list-style:none}
+.tl-detail li{position:relative;padding-left:16px;margin-bottom:6px;font-size:0.88rem;color:#99aabb;line-height:1.6}
+.tl-detail li::before{content:'>';position:absolute;left:0;color:var(--pink);font-weight:700}
+.tl-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.tl-tag{padding:3px 12px;border-radius:3px;font-size:0.7rem;border:1px solid rgba(0,212,255,0.2);color:var(--blue)}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.skill-card{background:var(--card);border:1px solid var(--border);border-bottom:3px solid transparent;border-radius:8px;padding:22px 20px;transition:all .4s;opacity:0;transform:translateY(20px)}
+.skill-card.visible{opacity:1;transform:translateY(0)}
+.skill-card:hover{border-color:var(--blue);border-bottom-color:var(--pink);box-shadow:0 0 30px rgba(0,212,255,0.06)}
+.skill-icon{font-size:1.6rem;margin-bottom:8px}
+.skill-card h3{font-size:0.9rem;margin-bottom:10px;font-weight:600}
+.s-bar{height:4px;border-radius:2px;background:rgba(255,255,255,0.06);margin-bottom:8px;overflow:hidden}
+.s-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--purple));width:0;transition:width 1.2s cubic-bezier(0.22,1,0.36,1)}
+.skill-card p{font-size:0.78rem;color:var(--dim)}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.contact-card{display:flex;align-items:center;gap:16px;padding:20px 24px;background:var(--card);border:1px solid var(--border);text-decoration:none;transition:all .4s;border-radius:8px}
+.contact-card:hover{border-color:var(--blue);box-shadow:0 0 24px rgba(0,212,255,0.08);transform:translateY(-3px)}
+.contact-icon{font-size:1.8rem}
+.contact-label{font-size:0.7rem;color:var(--dim);font-family:'Orbitron',sans-serif;letter-spacing:1px;margin-bottom:2px}
+.contact-val{font-size:0.95rem;color:var(--text)}
+footer{text-align:center;padding:36px 0;border-top:1px solid var(--border)}
+footer p{font-size:0.8rem;color:var(--dim);font-family:'Orbitron',sans-serif;letter-spacing:2px}
+.heart{color:var(--pink);display:inline-block;animation:heartbeat 1.4s infinite}
+@keyframes heartbeat{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
+.neon-divider{height:1px;background:linear-gradient(90deg,transparent,var(--blue),var(--pink),transparent);margin:0;opacity:0.3}
+@media(max-width:768px){
+.hero h1{font-size:2.6rem}
+.hero-stats{gap:24px}
+.stat-num{font-size:2.2rem}
+.about-grid{grid-template-columns:1fr}
+.timeline{padding-left:32px}
+.tl-dot{left:-32px;width:10px;height:10px}
+.nav-links a{font-size:0.7rem;padding:4px 10px}
+.section-title{font-size:1.3rem}
+}
+</style>
+</head>
+<body>
+<div class="grid-overlay"></div>
+<div class="scanline"></div>
+<nav class="navbar"><div class="container">
+<a href="#" class="logo">JYY<span class="accent">.</span></a>
+<div class="nav-links">
+<a href="#about">[01]</a>
+<a href="#exp">[02]</a>
+<a href="#skills">[03]</a>
+<a href="#contact">[04]</a>
+</div></div></nav>
+<section class="hero"><div class="container">
+<div class="hero-badge">// BMS_HIL_TEST_ENGINEER //</div>
+<h1><span class="pink">贾</span><span class="blue">瑶瑶</span></h1>
+<p class="hero-sub">五年汽车电子测试 · 全流程项目交付 · 从研发到SOP</p>
+<div class="hero-stats">
+<div class="stat-item"><span class="stat-num" data-target="5">0</span><span class="stat-suffix">+ YRS</span><span class="stat-label">EXPERIENCE</span></div>
+<div class="stat-item"><span class="stat-num" data-target="110">0</span><span class="stat-suffix">+</span><span class="stat-label">BUGS CLOSED</span></div>
+<div class="stat-item"><span class="stat-num" data-target="3">0</span><span class="stat-suffix"></span><span class="stat-label">SHIP MODELS</span></div>
+<div class="stat-item"><span class="stat-num" data-target="100">0</span><span class="stat-suffix">%</span><span class="stat-label">COVERAGE</span></div>
+</div>
+<a href="#exp" class="btn-neon">▼ EXPLORE</a>
+</div></section>
+<div class="neon-divider"></div>
+<section id="about" class="section"><div class="container">
+<div class="section-title-wrapper">
+<span class="section-number">// 01</span>
+<h2 class="section-title"><span class="pink">PERSONAL</span> <span class="blue">FILE</span></h2>
+</div>
+<div class="about-grid">
+<div class="about-card">
+<div class="info-row"><span class="info-label">NAME</span><span class="info-val">贾瑶瑶</span></div>
+<div class="info-row"><span class="info-label">ORIGIN</span><span class="info-val">陕西省安康市</span></div>
+<div class="info-row"><span class="info-label">D.O.B</span><span class="info-val">1995.12</span></div>
+<div class="info-row"><span class="info-label">EDUCATION</span><span class="info-val">西安科技大学高新学院 · 全日制本科</span></div>
+<div class="info-row"><span class="info-label">PHONE</span><span class="info-val">18329865986</span></div>
+<div class="info-row"><span class="info-label">EMAIL</span><span class="info-val">18329865986@163.com</span></div>
+<div class="info-row"><span class="info-label">TARGET</span><span class="info-val">BMS-HIL测试工程师 / 随时入职</span></div>
+</div>
+<div class="terminal">
+<div class="terminal-bar"><span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span><span class="term-title">PROFILE.EXE</span></div>
+<div class="terminal-body">
+<p><span class="prompt">$</span> 拥有5年汽车电子测试经验，具备BMS控制器HIL仿真测试完整项目实战经验，参与车型从研发至SOP全流程。</p>
+<p><span class="prompt">$</span> 熟练掌握CANoe、HIL等测试工具链，熟悉GB/T 27930等行业协议标准。</p>
+<p><span class="prompt">$</span> 善于通过细致的问题复现与日志分析定位深层缺陷，推动问题高效闭环。</p>
+<p><span class="prompt">$</span> 逻辑思维严谨，具备较强的跨团队沟通能力，能够在项目高压节点下保障交付质量。</p>
+<p><span class="prompt">$</span> <span class="cursor">▌</span></p>
+</div></div></div></div></section>
+<div class="neon-divider"></div>
+<section id="exp" class="section alt-bg"><div class="container">
+<div class="section-title-wrapper"><span class="section-number">// 02</span><h2 class="section-title"><span class="pink">PROJECT</span> <span class="blue">HISTORY</span></h2></div>
+<div class="timeline">
+<div class="tl-item"><div class="tl-dot"></div><div class="tl-card">
+<div class="tl-header"><span class="tl-date">2024.10 — 2026.05</span><span class="tl-company">上海昆仑京测智能科技有限公司</span></div>
+<h3>长安启源 A07 · BMS-HIL 测试</h3>
+<ul class="tl-detail">
+<li>参与长安启源 A07 BMS 控制器测试项目，负责用例编写/执行、bug管理、测试报告输出</li>
+<li>测试模块覆盖：休眠唤醒、上下高压、热管理、热失控、SOH精度、交/直流充电</li>
+<li>热管理：基于HIL台架模拟NTC传感器在-30℃~65℃极端温度下的信号采集</li>
+<li>热失控：设计过充(120%SOC)、过放、内短路、加热片触发等典型场景</li>
+<li>SOH精度估算：模拟不同循环次数(0-1000次)、温度(0℃~45℃)、日历衰减</li>
+<li>交/直流充电测试：验证CC/CP信号交互时序，覆盖30+异常场景</li>
+</ul>
+<div class="tl-tags"><span class="tl-tag">用例200+条</span><span class="tl-tag">测试6轮</span><span class="tl-tag">闭环缺陷47个</span><span class="tl-tag">已量产</span></div>
+</div></div>
+<div class="tl-item"><div class="tl-dot"></div><div class="tl-card">
+<div class="tl-header"><span class="tl-date">2023.04 — 2024.09</span><span class="tl-company">上海昆仑京测智能科技有限公司</span></div>
+<h3>荣威 i6 MAX · BMS-HIL 测试</h3>
+<ul class="tl-detail">
+<li>参与荣威 i6 MAX BMS 电池管理系统测试</li>
+<li>主要测试模块：休眠唤醒、状态机切换、上下高压、热管理策略</li>
+</ul></div></div>
+<div class="tl-item"><div class="tl-dot"></div><div class="tl-card">
+<div class="tl-header"><span class="tl-date">2022.11 — 2023.03</span><span class="tl-company">沈阳东信创智科技有限公司</span></div>
+<h3>岚图 FREE · BMS-HIL 测试</h3>
+<ul class="tl-detail">
+<li>负责整车BMS休眠唤醒、状态机、上下高压、热管理的全功能仿真测试</li>
+<li>基于HIL台架设计CAN/CANFD唤醒、KL15硬线唤醒、充电桩CP唤醒等多种唤醒源用例</li>
+<li>发现CAN报文周期过短导致BMS无法进入休眠缺陷，优化后静态电流降至≤3mA</li>
+<li>热管理中发现高温快充电芯温差>5℃时策略迟滞问题，优化后温差≤3℃</li>
+</ul>
+<div class="tl-tags"><span class="tl-tag">测试5轮</span><span class="tl-tag">严重缺陷8个</span><span class="tl-tag">已量产</span></div>
+</div></div>
+<div class="tl-item"><div class="tl-dot"></div><div class="tl-card">
+<div class="tl-header"><span class="tl-date">2021.08 — 2022.10</span><span class="tl-company">沈阳东信创智科技有限公司</span></div>
+<h3>岚图 FREE · 智能座舱 OTA 升级测试</h3>
+<ul class="tl-detail">
+<li>负责岚图 FREE 智能座舱 OTA 升级测试全流程</li>
+<li>验证全量/增量OTA从云端下发、下载、校验、安装及激活全流程</li>
+<li>覆盖弱网(2G/3G)、WiFi切换、断点续传、存储不足等异常场景</li>
+</ul>
+<div class="tl-tags"><span class="tl-tag">用例210+条</span><span class="tl-tag">闭环缺陷35个</span></div>
+</div></div>
+<div class="tl-item"><div class="tl-dot"></div><div class="tl-card">
+<div class="tl-header"><span class="tl-date">2020.11 — 2021.07</span><span class="tl-company">沈阳东信创智科技有限公司</span></div>
+<h3>岚图 FREE · 智能座舱多媒体测试</h3>
+<ul class="tl-detail">
+<li>验证本地/USB/蓝牙音乐、在线电台及视频播放功能</li>
+<li>全场景语音助手测试：唤醒率≥95%，执行成功率≥90%</li>
+</ul>
+<div class="tl-tags"><span class="tl-tag">用例180+条</span><span class="tl-tag">闭环缺陷28个</span><span class="tl-tag">已量产</span></div>
+</div></div>
+</div></div></section>
+<div class="neon-divider"></div>
+<section id="skills" class="section"><div class="container">
+<div class="section-title-wrapper"><span class="section-number">// 03</span><h2 class="section-title"><span class="pink">SKILLS</span> <span class="blue">MATRIX</span></h2></div>
+<div class="skills-grid">
+<div class="skill-card"><div class="skill-icon">⚡</div><h3>HIL 台架测试</h3><div class="s-bar"><div class="s-fill" data-w="95"></div></div><p>NI HIL · 信号模拟 · 故障注入</p></div>
+<div class="skill-card"><div class="skill-icon">🔌</div><h3>CAN 总线分析</h3><div class="s-bar"><div class="s-fill" data-w="90"></div></div><p>CANoe · CAN/CANFD/LIN</p></div>
+<div class="skill-card"><div class="skill-icon">🔋</div><h3>BMS 全模块测试</h3><div class="s-bar"><div class="s-fill" data-w="92"></div></div><p>休眠唤醒 · 上下高压 · 热管理</p></div>
+<div class="skill-card"><div class="skill-icon">🔌</div><h3>直流快充 GB/T 27930</h3><div class="s-bar"><div class="s-fill" data-w="88"></div></div><p>充电握手 · 全流程验证</p></div>
+<div class="skill-card"><div class="skill-icon">🧩</div><h3>Simulink 仿真</h3><div class="s-bar"><div class="s-fill" data-w="80"></div></div><p>模型在环 · ECU-Test</p></div>
+<div class="skill-card"><div class="skill-icon">🤖</div><h3>AI 辅助测试</h3><div class="s-bar"><div class="s-fill" data-w="85"></div></div><p>OpenAI Codex · 脚本自动生成</p></div>
+<div class="skill-card"><div class="skill-icon">🔧</div><h3>高压电源/电子负载</h3><div class="s-bar"><div class="s-fill" data-w="87"></div></div><p>电池包模拟 · 充放电工况</p></div>
+<div class="skill-card"><div class="skill-icon">📋</div><h3>测试设计与管理</h3><div class="s-bar"><div class="s-fill" data-w="93"></div></div><p>用例编写 · 缺陷闭环管理</p></div>
+<div class="skill-card"><div class="skill-icon">📡</div><h3>OTA 远程升级测试</h3><div class="s-bar"><div class="s-fill" data-w="82"></div></div><p>全量/增量 · 断点续传</p></div>
+<div class="skill-card"><div class="skill-icon">🗣️</div><h3>智能座舱语音测试</h3><div class="s-bar"><div class="s-fill" data-w="78"></div></div><p>唤醒率≥95% · 语义理解</p></div>
+<div class="skill-card"><div class="skill-icon">📊</div><h3>缺陷分析与报告</h3><div class="s-bar"><div class="s-fill" data-w="91"></div></div><p>Log分析 · CAN Trace</p></div>
+<div class="skill-card"><div class="skill-icon">🔬</div><h3>热失控测试</h3><div class="s-bar"><div class="s-fill" data-w="85"></div></div><p>三级报警 · 安全验证</p></div>
+</div></div></section>
+<div class="neon-divider"></div>
+<section id="contact" class="section alt-bg"><div class="container">
+<div class="section-title-wrapper"><span class="section-number">// 04</span><h2 class="section-title"><span class="pink">CONTACT</span> <span class="blue">CHANNEL</span></h2></div>
+<div class="contact-grid">
+<a href="tel:18329865986" class="contact-card"><span class="contact-icon">📞</span><div><div class="contact-label">PHONE</div><div class="contact-val">18329865986</div></div></a>
+<a href="mailto:18329865986@163.com" class="contact-card"><span class="contact-icon">✉️</span><div><div class="contact-label">EMAIL</div><div class="contact-val">18329865986@163.com</div></div></a>
+<div class="contact-card"><span class="contact-icon">📍</span><div><div class="contact-label">LOCATION</div><div class="contact-val">中国 · 可随时入职</div></div></div>
+</div></div></section>
+<footer><div class="container">
+<p>贾瑶瑶 · BMS HIL TEST ENGINEER</p>
+<p style="margin-top:6px;font-size:0.65rem;letter-spacing:4px;">DESIGNED WITH <span class="heart">♥</span> // 2026</p>
+</div></footer>
+<script>
+function animateNums(){document.querySelectorAll('.stat-num').forEach(e=>{const t=parseInt(e.dataset.target);let n=0;const s=Math.ceil(t/50);const go=()=>{n+=s;if(n<t){e.textContent=n;requestAnimationFrame(go)}else e.textContent=t};go()})}
+function checkVisible(){document.querySelectorAll('.tl-item,.skill-card').forEach(e=>{const t=e.getBoundingClientRect();if(t.top<window.innerHeight-50)e.classList.add('visible')});document.querySelectorAll('.s-fill').forEach(e=>{const t=e.getBoundingClientRect();if(t.top<window.innerHeight-30&&!e.dataset.animated){e.dataset.animated='1';e.style.width=e.dataset.w+'%'}})}
+window.addEventListener('scroll',checkVisible);
+window.addEventListener('load',()=>{setTimeout(animateNums,400);setTimeout(checkVisible,200)});
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const t=document.querySelector(a.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})});
+</script>
+</body>
+</html>
